@@ -19,7 +19,7 @@ namespace Subclasses
 
             replacedNicknames[ev.Player] = ev.Player.CustomName;
 
-            string name = "164.55";
+            string name = "???";
 
             ev.Player.CustomName = name;
 

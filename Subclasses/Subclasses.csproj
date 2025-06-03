@@ -95,6 +95,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\TeslaControl.cs" />
+    <Compile Include="Commands\Cuff.cs" />
+    <Compile Include="Commands\FacilityControl.cs" />
     <Compile Include="Commands\subrole.cs" />
     <Compile Include="Commands\subs.cs" />
     <Compile Include="Config.cs" />
@@ -103,5 +106,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RadioAnon.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

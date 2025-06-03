@@ -9,6 +9,7 @@ using Subclasses.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using UnityEngine.Assertions.Must;
 
 namespace Subclasses
@@ -130,11 +131,13 @@ namespace Subclasses
                 }
                 
                 if (!player.IsConnected) yield break;
-                player.ShowHint(duration: 0.5f, message: $"<size=25><align=left><pos=-355>{Server.Name}</pos></align></size>\n" +
+                player.ShowHint(duration: 0.1f, message: $"<size=25><align=left><pos=-355>{Server.Name}</pos></align></size>\n" +
                     $"<size=25><align=left><pos=-355>-----------------------------------</pos></align></size>\n" +
                     $"<size=25><align=left><pos=-355><color={color}>Ник: {player.CustomName}</color></pos></align></size>\n" +
-                    $"<size=25><align=left><pos=-355><color={color}>Описание:</color> {player.CustomInfo}</pos></align></size>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-                yield return Timing.WaitForSeconds(0.4f);
+                    $"<size=25><align=left><pos=-355><color={color}>Описание:</color> {player.CustomInfo}</pos></align></size>\n" +
+                    $"<size=25><align=left><pos=-355><color={color}>Раунд идет: </color><color=green>{Exiled.API.Features.Round.ElapsedTime:mm\\:ss}</color></align></pos></size>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+                
+                yield return Timing.WaitForSeconds(0.05f);
             }
         }
 
@@ -149,6 +152,19 @@ namespace Subclasses
 
         public void TeslaTrigger(TriggeringTeslaEventArgs ev)
         {
+
+            ev.Tesla.ActivationTime = Plugin.plugin.TeslaActivationTime;
+            if (!Plugin.plugin.TeslaEnabled)
+            {
+                ev.DisableTesla = true;
+                return;
+            }
+            ev.Tesla.CooldownTime = Plugin.plugin.TeslaCooldown;
+            //Log.Error(ev.Tesla.CooldownTime); = 1; ActivationTime = 0.75
+            if (Plugin.plugin.TeslaEnabled)
+            {
+                ev.DisableTesla = false;
+            }
             if (ev.Player.Role.Side == Side.Mtf)
                 ev.IsTriggerable = false;
         }
